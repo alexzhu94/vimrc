@@ -50,17 +50,39 @@ set history=700
 filetype plugin on
 filetype indent on
 
+
+"extracted from rc.vim in Practical Vim, meant for using macros
+"on multiple files
+set hidden
+if has("autocmd")
+  autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+endif
+
 " Set to auto read when a file is changed from the outside
 set autoread
 
+set nocompatible
+runtime macros/matchit.vim
+
+
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
+"
 let mapleader = ","
 let g:mapleader = ","
 
-" Fast saving
-nmap <leader>w :w!<cr>
 
+
+" Fast saving, quitting, save quitting, vsplitting
+nmap <leader>w :w!<cr>
+nmap <leader>wa :wa!<cr>
+nmap <leader>q :q!<cr>
+nmap <leader>qa :qa!<cr>
+nmap <leader>wq :wq!<cr>
+nmap <leader>wqa :wqa!<cr>
+nmap <leader>wq :wq!<cr>
+nmap <leader>wqa :wqa!<cr>
+nmap <leader>v :vsp<cr>
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
@@ -116,6 +138,10 @@ set smartcase
 " Highlight search results
 set hlsearch
 
+" number the lines 
+set nu 
+
+
 " Makes search act like search in modern browsers
 set incsearch 
 
@@ -147,7 +173,8 @@ set foldcolumn=1
 syntax enable 
 
 try
-    colorscheme desert
+    "colorscheme desert
+    colorscheme evening
 catch
 endtry
 
@@ -207,6 +234,10 @@ set wrap "Wrap lines
 vnoremap <silent> * :call VisualSelection('f', '')<CR>
 vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
+"visual mode and normal mode use of the &
+nnoremap & :&& <CR>
+xnoremap & :&& <CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
@@ -214,25 +245,48 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
+"There's never a difference intended, until we intend a difference, whereby we always prefer the display line, so I think this mapping should probably just be here for convenience. 
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+" also adjust q/ to q<space>
 map <space> /
 map <c-space> ?
+map q<space> q/
+
+"if I start to use backwards search extensively, I'll come back and map backwards search 
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
+
+
+"easy mapping to echo the number of occurences of the most recently searched string
+map <leader>nu :%s///gn<cr>
 
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+map <C-c> <C-W>c
+"that's fucking sick :]
+"I also added a convenient way to close windows as well
 
 " Close the current buffer
 map <leader>bd :Bclose<cr>
 
 " Close all the buffers
 map <leader>ba :1,1000 bd!<cr>
+
+
+" other buffer movements
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+nnoremap <silent> [B :bfirst<CR>
+nnoremap <silent> ]B :blast<CR>
+
+"for searching, 
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -359,10 +413,10 @@ map <leader>s? z=
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Quickly open a buffer for scribble
-map <leader>q :e ~/buffer<cr>
+map <leader>s :e ~/buffer<cr>
 
 " Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
+map <leader>m :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>

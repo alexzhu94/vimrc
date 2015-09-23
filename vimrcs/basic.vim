@@ -50,6 +50,8 @@ set history=700
 filetype plugin on
 filetype indent on
 
+"Enable omni completion
+set omnifunc=syntaxcomplete
 
 "extracted from rc.vim in Practical Vim, meant for using macros
 "on multiple files
@@ -64,6 +66,17 @@ set autoread
 set nocompatible
 runtime macros/matchit.vim
 
+"ctags configurations 
+"regenerate the tags file on f5
+"two different options for regenerating the tags file presented in Practical Vim
+"The first one allows us to regenerate after pressing f5, the second
+"will do it automatically on every write to disk. However, the drawback
+"of the second option is that with really large codebases, this could 
+"interrupt our workflow
+"A good balance between these 2 approaches would be to reindex our codebase on each git commit
+
+nnoremap <f5> :!ctags -R<CR>
+autocmd BufWritePost * call system("ctags -R")
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -71,7 +84,9 @@ runtime macros/matchit.vim
 let mapleader = ","
 let g:mapleader = ","
 
-
+"defining a calculator from the command line
+:command! -nargs=+ Calc :py print <args>
+:py from math import *
 
 " Fast saving, quitting, save quitting, vsplitting
 nmap <leader>w :w!<cr>

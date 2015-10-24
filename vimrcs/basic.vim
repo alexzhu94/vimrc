@@ -85,8 +85,9 @@ let mapleader = ","
 let g:mapleader = ","
 
 "defining a calculator from the command line
-:command! -nargs=+ Calc :py print <args>
-:py from math import *
+":command! -nargs=+ Calc :py print <args>
+":py from math import *
+command! -nargs=+ Calc :!python -c "from math import *; print <args>"
 
 " Fast saving, quitting, save quitting, vsplitting
 nmap <leader>w :w!<cr>
@@ -98,6 +99,7 @@ nmap <leader>wqa :wqa!<cr>
 nmap <leader>wq :wq!<cr>
 nmap <leader>wqa :wqa!<cr>
 nmap <leader>v :vsp<cr>
+nmap <leader>h :sp<cr>
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null

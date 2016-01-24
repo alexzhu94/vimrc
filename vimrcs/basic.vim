@@ -98,6 +98,7 @@ nmap <leader>wqa :wqa!<cr>
 nmap <leader>wq :wq!<cr>
 nmap <leader>wqa :wqa!<cr>
 nmap <leader>v :vsp<cr>
+nmap <leader>h :sp<cr>
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null

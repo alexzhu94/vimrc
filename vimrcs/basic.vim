@@ -85,8 +85,9 @@ let mapleader = ","
 let g:mapleader = ","
 
 "defining a calculator from the command line
-:command! -nargs=+ Calc :py print <args>
-:py from math import *
+":command! -nargs=+ Calc :py print <args>
+":py from math import *
+command! -nargs=+ Calc :!python -c "from math import *; print <args>"
 
 " Fast saving, quitting, save quitting, vsplitting
 nmap <leader>w :w!<cr>

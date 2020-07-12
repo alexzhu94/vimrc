@@ -190,8 +190,8 @@ set foldcolumn=1
 syntax enable 
 
 try
-    "colorscheme desert
-    colorscheme evening
+    colorscheme elflord
+    "colorscheme evening
 catch
 endtry
 
